@@ -18,6 +18,10 @@
         <slf4j.version>1.7.7</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<aspectjrt>1.8.6</aspectjrt>
+		
+		<!-- shiro版本号 -->
+        <shiro.version>1.2.3</shiro.version>
+        <ehcache.version>2.6.9</ehcache.version>
     </properties>  
   <modules>
   	
