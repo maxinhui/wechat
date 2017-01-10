@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadUtil {
 	private static final Logger logger = LogManager.getLogger(UploadUtil.class);
 
+	
 	/**
 	 * @author MA
 	 * @param files
@@ -29,7 +30,7 @@ public class UploadUtil {
 			try {
 				imgFile.mkdirs();
 			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
+				logger.error(e.getMessage(), e);  
 			}
 		} // 判断是否有词路径.没有新建
 		filePath += "/" + new Date().getTime() + "." + file.getOriginalFilename().split("\\.")[1];
