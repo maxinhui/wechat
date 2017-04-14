@@ -1,19 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans 
-    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
-    http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-    http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context-4.0.xsd
-    http://www.springframework.org/schema/data/jpa 
-    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-    http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-    http://www.springframework.org/schema/data/jpa
-    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
     <!-- 缓存管理器 使用Ehcache实现 -->
@@ -30,7 +21,7 @@
         /> </bean> -->
 
     <!-- Realm实现 -->
-    <bean id="userRealm" class="top.builbu.business.user.service.impl.UserRealm">
+    <bean id="userRealm" class="top.builbu.business.user.service.impl.UserRealmServiceImpl">
         <property name="cachingEnabled" value="true" />
         <property name="authenticationCachingEnabled" value="true" />
         <property name="authenticationCacheName" value="authenticationCache" />
@@ -46,7 +37,7 @@
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg name="name" value="sid" />
         <property name="httpOnly" value="true" />
-        <property name="maxAge" value="180000" />
+        <property name="maxAge" value="1800000" />
     </bean>
 
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -58,6 +49,7 @@
 
     <!-- rememberMe管理器 -->
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+    <!-- rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位）-->
         <property name="cipherKey"
             value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
         <property name="cookie" ref="rememberMeCookie" />
@@ -70,6 +62,11 @@
         <property name="sessionIdGenerator" ref="sessionIdGenerator" />
     </bean>
 
+    <!-- 会话验证调度器 -->
+    <bean id="sessionValidationScheduler" class="top.builbu.shiro.quartz.QuartzSessionValidationScheduler">
+        <property name="sessionValidationInterval" value="1800000"/>
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
 
 
     <!-- 会话管理器 -->
@@ -78,6 +75,7 @@
         <property name="globalSessionTimeout" value="1800000" />
         <property name="deleteInvalidSessions" value="true" />
         <property name="sessionValidationSchedulerEnabled" value="true" />
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
         <property name="sessionDAO" ref="sessionDAO" />
         <property name="sessionIdCookieEnabled" value="true" />
         <property name="sessionIdCookie" ref="sessionIdCookie" />
@@ -135,10 +133,10 @@
         <property name="filterChainDefinitions">
             <value>
                 /index.html = authc
-				/login.html = anon
+				/ui = anon
 				/tologin.html = anon
 				/ = anon
-				/* = authc
+				/login = authc
                
             </value>
         </property>

@@ -88,8 +88,8 @@ public abstract class BaseResultCode {
 		map.put(COMMON_CONTAIN_YITINGYONG,"单据已停用");
 		map.put(COMMON_MESSAGE_ZUOFEI,"作废失败 该信息已是作废信息");
 		map.put(COMMON_HUIFU_DEFEATED,"该信息已是回复信息");
-		map.put(COMMON_MESSAGE_LOSE,"保存失败");
-		map.put(COMMON_MESSAGE_CHENGGONG,"保存成功");
+		map.put(COMMON_MESSAGE_LOSE,"操作失败");
+		map.put(COMMON_MESSAGE_CHENGGONG,"操作成功");
 		map.put(COMMON_MESSAGE_REPETITION,"以发送信息不能作废");
 		map.put(COMMON_MESSAGE_ONE,"作废信息不能发送");
 		map.put(COMMON_MESSAGE_TWO,"发送完成信息不能重复发送");
@@ -109,7 +109,7 @@ public abstract class BaseResultCode {
 		map.put(COMMON_MISSING_SHARDING_KEY, "缺少数据库分库键！");
 		map.put(COMMON_SALE_DELIVERY, "该订单不是未发货状态，不能发货！");
 		map.put(COMMON_SALE_RETURN, "该订单不是已发货状态，不能拒收！");
-		map.put(COMMON_NO_USER, "没有获取当前操作用户，请重新登陆！");
+		map.put(COMMON_NO_USER, "登录名或密码错误，请重新登陆！");
 		
 		map.put(COMMON_NO_CHECK, "很遗憾，未中奖！");
 		map.put(COMMON_NO_PRIZE, "无剩余奖品！");

@@ -1,0 +1,64 @@
+<script type="text/javascript">
+function pic_upload_success(file, data) {
+    var json = $.parseJSON(data)
+    
+    $(this).bjuiajax('ajaxDone', json)
+    if (json.success) {
+        $('#custom_pic').val(json.module).trigger('validate')
+        $('#custom_span_pic').html('<img src="'+ json.module +'" width="100" />')
+    }
+}
+function do_OK(json, $form) {
+    console.log(json)
+    console.log($form)
+}
+
+function mycallback(json) {
+
+	$(this)
+    .bjuiajax('ajaxDone', json)       // 信息提示		                       
+   
+    if(json.closeCurrent){
+       $(this)
+           .navtab('reloadFlag', json.tabid)
+           .dialog('closeCurrent')	
+    }
+
+}
+</script>
+<div class="bjui-pageContent">
+<form action="${request.contextPath}/e_card_advanced_info/update" id="j_custom_form" data-toggle="validate" data-alertmsg="false" data-callback="mycallback">
+    <input type="hidden" name="custom.id" value="edce142bc2ed4ec6b623aacaf602a4de">
+    <input type="hidden" name="info_no" value="${module.info_no}">
+    <div class="bjui-row col-3">
+     
+        <br>
+                <label class="row-label" ></label>
+         <div class="row-input required">
+            <input type="text" name="use_condition" id="use_condition" value="${module.use_condition?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" ></label>
+         <div class="row-input required">
+            <input type="text" name="abstract_info" id="abstract_info" value="${module.abstract_info?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" ></label>
+         <div class="row-input required">
+            <input type="text" name="text_image_list" id="text_image_list" value="${module.text_image_list?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" ></label>
+         <div class="row-input required">
+            <input type="text" name="time_limit" id="time_limit" value="${module.time_limit?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" ></label>
+         <div class="row-input required">
+            <input type="text" name="card_no" id="card_no" value="${module.card_no}" data-rule="required">
+         </div>
+    </div>
+</form>
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+        <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+    </ul>
+</div>

@@ -2,102 +2,113 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.builbu.business.user.repository.RoleMapper">
   <resultMap id="BaseResultMap" type="top.builbu.business.user.entity.Role">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    <id column="role_id" jdbcType="INTEGER" property="roleId" />
-    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="role_sys" jdbcType="VARCHAR" property="roleSys" />
+     <id column="role_id" jdbcType="INTEGER" property="roleId" />
+     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+     <result column="role_sys" jdbcType="VARCHAR" property="roleSys" />
+     <result column="permission_id" jdbcType="VARCHAR" property="permissionId" />
   </resultMap>
+  
+  
+  <resultMap id="BaseResultMapDTO" type="top.builbu.business.user.dto.RoleDTO">
+     <id column="role_id" jdbcType="INTEGER" property="roleId" />
+     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+     <result column="role_sys" jdbcType="VARCHAR" property="roleSys" />
+     <result column="permission_id" jdbcType="VARCHAR" property="permissionId" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    role_id, role_name, role_sys
+     role_id,role_name,role_sys,permission_id
   </sql>
+<!-- 列表  -->
+  <select id="selectByList"  resultMap="BaseResultMapDTO">
+     select 
+     <include refid="Base_Column_List" />
+     from role where 1=1
+      <if test="dto.roleId != null">
+      and  role_id = #{dto.roleId,jdbcType=INTEGER}
+      </if>
+      <if test="dto.roleName != null">
+      and  role_name = #{dto.roleName,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.roleSys != null">
+      and  role_sys = #{dto.roleSys,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.permissionId != null">
+      and  permission_id = #{dto.permissionId,jdbcType=VARCHAR}
+      </if>
+     order by role_id desc limit #{offset},#{limit}
+  </select>
+  
+<!-- 主键查询  -->
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
     select 
     <include refid="Base_Column_List" />
-    from role
+    from role    
     where role_id = #{roleId,jdbcType=INTEGER}
   </select>
+  
+
+<!-- 主键删除 --> 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
     delete from role
     where role_id = #{roleId,jdbcType=INTEGER}
   </delete>
+
+
+<!-- 插入  -->
   <insert id="insert" parameterType="top.builbu.business.user.entity.Role">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    insert into role (role_id, role_name, role_sys
+    insert into role (
+	    role_id,role_name,role_sys,permission_id
       )
-    values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleSys,jdbcType=VARCHAR}
+    values (
+         #{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleSys,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="top.builbu.business.user.entity.Role">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    insert into role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        role_id,
-      </if>
-      <if test="roleName != null">
-        role_name,
-      </if>
-      <if test="roleSys != null">
-        role_sys,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        #{roleId,jdbcType=INTEGER},
-      </if>
-      <if test="roleName != null">
-        #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="roleSys != null">
-        #{roleSys,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="top.builbu.business.user.entity.Role">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
+ 
+<!-- 修改 -->  
+  <update id="updateByPrimaryKey" parameterType="top.builbu.business.user.entity.Role">
     update role
     <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
       <if test="roleName != null">
         role_name = #{roleName,jdbcType=VARCHAR},
       </if>
       <if test="roleSys != null">
         role_sys = #{roleSys,jdbcType=VARCHAR},
       </if>
+      <if test="permissionId != null">
+        permission_id = #{permissionId,jdbcType=VARCHAR}
+      </if>
     </set>
+  
     where role_id = #{roleId,jdbcType=INTEGER}
+   
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.builbu.business.user.entity.Role">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    update role
-    set role_name = #{roleName,jdbcType=VARCHAR},
-      role_sys = #{roleSys,jdbcType=VARCHAR}
-    where role_id = #{roleId,jdbcType=INTEGER}
-  </update>
+<!--   批量删除       -->
+  <delete id="deleteByAll" parameterType="java.lang.Integer">
+      delete from role where role_id in
+      <foreach item="id" collection="delids" open="(" separator="," close=")">
+          #{id}
+      </foreach>
+  </delete>  
+  
+  <select id="selectByCount" resultType="java.lang.Integer">
+		select count(1)
+		from role where 1=1
+	      <if test="dto.roleId != null">
+	      and  role_id = #{dto.roleId,jdbcType=INTEGER}
+	      </if>
+	      <if test="dto.roleName != null">
+	      and  role_name = #{dto.roleName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.roleSys != null">
+	      and  role_sys = #{dto.roleSys,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.permissionId != null">
+	      and  permission_id = #{dto.permissionId,jdbcType=VARCHAR}
+	      </if>
+	</select>
 </mapper>

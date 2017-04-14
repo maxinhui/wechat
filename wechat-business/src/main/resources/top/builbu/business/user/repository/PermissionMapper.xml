@@ -2,111 +2,77 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.builbu.business.user.repository.PermissionMapper">
   <resultMap id="BaseResultMap" type="top.builbu.business.user.entity.Permission">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    <id column="permission_id" jdbcType="INTEGER" property="permissionId" />
-    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
-    <result column="permission_sys" jdbcType="VARCHAR" property="permissionSys" />
-    <result column="permission_level" jdbcType="INTEGER" property="permissionLevel" />
-    <result column="parentid" jdbcType="INTEGER" property="parentid" />
+     <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
+     <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+     <result column="permission_sys" jdbcType="VARCHAR" property="permissionSys" />
+     <result column="permission_level" jdbcType="INTEGER" property="permissionLevel" />
   </resultMap>
   
-    <resultMap id="BaseResultMapDTO" type="top.builbu.business.user.dto.PermissionDTO">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    <id column="permission_id" jdbcType="INTEGER" property="permissionId" />
-    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
-    <result column="permission_sys" jdbcType="VARCHAR" property="permissionSys" />
-    <result column="permission_level" jdbcType="INTEGER" property="permissionLevel" />
-    <result column="parentid" jdbcType="INTEGER" property="parentid" />
+  
+  <resultMap id="BaseResultMapDTO" type="top.builbu.business.user.dto.PermissionDTO">
+     <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
+     <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+     <result column="permission_sys" jdbcType="VARCHAR" property="permissionSys" />
+     <result column="permission_level" jdbcType="INTEGER" property="permissionLevel" />
   </resultMap>
+  
   <sql id="Base_Column_List">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    permission_id, permission_name, permission_sys, permission_level, parentid
+     permission_id,permission_name,permission_sys,permission_level
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
+<!-- 列表  -->
+  <select id="selectByList"  resultMap="BaseResultMapDTO">
+     select 
+     <include refid="Base_Column_List" />
+     from permission where 1=1
+      <if test="dto.permissionId != null">
+      and  permission_id = #{dto.permissionId,jdbcType=BIGINT}
+      </if>
+      <if test="dto.permissionName != null">
+      and  permission_name = #{dto.permissionName,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.permissionSys != null">
+      and  permission_sys = #{dto.permissionSys,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.permissionLevel != null">
+      and  permission_level = #{dto.permissionLevel,jdbcType=INTEGER}
+      </if>
+     order by permission_id desc limit #{offset},#{limit}
+  </select>
+  
+<!-- 主键查询  -->
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from permission
-    where permission_id = #{permissionId,jdbcType=INTEGER}
+    from permission    
+    where permission_id = #{permissionId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
+  
+
+<!-- 主键删除 --> 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from permission
-    where permission_id = #{permissionId,jdbcType=INTEGER}
+    where permission_id = #{permissionId,jdbcType=BIGINT}
   </delete>
+
+
+<!-- 插入  -->
   <insert id="insert" parameterType="top.builbu.business.user.entity.Permission">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    insert into permission (permission_id, permission_name, permission_sys, 
-      permission_level, parentid)
-    values (#{permissionId,jdbcType=INTEGER}, #{permissionName,jdbcType=VARCHAR}, #{permissionSys,jdbcType=VARCHAR}, 
-      #{permissionLevel,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER})
+    insert into permission (
+	    permission_id,permission_name,permission_sys,permission_level
+      )
+    values (
+         #{permissionId,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, #{permissionSys,jdbcType=VARCHAR}, #{permissionLevel,jdbcType=INTEGER}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="top.builbu.business.user.entity.Permission">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    insert into permission
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="permissionId != null">
-        permission_id,
-      </if>
-      <if test="permissionName != null">
-        permission_name,
-      </if>
-      <if test="permissionSys != null">
-        permission_sys,
-      </if>
-      <if test="permissionLevel != null">
-        permission_level,
-      </if>
-      <if test="parentid != null">
-        parentid,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="permissionId != null">
-        #{permissionId,jdbcType=INTEGER},
-      </if>
-      <if test="permissionName != null">
-        #{permissionName,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionSys != null">
-        #{permissionSys,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionLevel != null">
-        #{permissionLevel,jdbcType=INTEGER},
-      </if>
-      <if test="parentid != null">
-        #{parentid,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="top.builbu.business.user.entity.Permission">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
+ 
+<!-- 修改 -->  
+  <update id="updateByPrimaryKey" parameterType="top.builbu.business.user.entity.Permission">
     update permission
     <set>
+      <if test="permissionId != null">
+        permission_id = #{permissionId,jdbcType=BIGINT},
+      </if>
       <if test="permissionName != null">
         permission_name = #{permissionName,jdbcType=VARCHAR},
       </if>
@@ -114,24 +80,35 @@
         permission_sys = #{permissionSys,jdbcType=VARCHAR},
       </if>
       <if test="permissionLevel != null">
-        permission_level = #{permissionLevel,jdbcType=INTEGER},
-      </if>
-      <if test="parentid != null">
-        parentid = #{parentid,jdbcType=INTEGER},
+        permission_level = #{permissionLevel,jdbcType=INTEGER}
       </if>
     </set>
-    where permission_id = #{permissionId,jdbcType=INTEGER}
+  
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+   
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.builbu.business.user.entity.Permission">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:19.
-    -->
-    update permission
-    set permission_name = #{permissionName,jdbcType=VARCHAR},
-      permission_sys = #{permissionSys,jdbcType=VARCHAR},
-      permission_level = #{permissionLevel,jdbcType=INTEGER},
-      parentid = #{parentid,jdbcType=INTEGER}
-    where permission_id = #{permissionId,jdbcType=INTEGER}
-  </update>
+<!--   批量删除       -->
+  <delete id="deleteByAll" parameterType="java.lang.Long">
+      delete from permission where permission_id in
+      <foreach item="id" collection="delids" open="(" separator="," close=")">
+          #{id}
+      </foreach>
+  </delete>  
+  
+  <select id="selectByCount" resultType="java.lang.Integer">
+		select count(1)
+		from permission where 1=1
+	      <if test="dto.permissionId != null">
+	      and  permission_id = #{dto.permissionId,jdbcType=BIGINT}
+	      </if>
+	      <if test="dto.permissionName != null">
+	      and  permission_name = #{dto.permissionName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.permissionSys != null">
+	      and  permission_sys = #{dto.permissionSys,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.permissionLevel != null">
+	      and  permission_level = #{dto.permissionLevel,jdbcType=INTEGER}
+	      </if>
+	</select>
 </mapper>

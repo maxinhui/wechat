@@ -12,26 +12,43 @@ import java.io.Serializable;
 public class BaseResultDO implements Serializable {
 	private static final long serialVersionUID = 4455702538105064491L;
 	private boolean success = true;
-	private String resultCode;
-	protected String errorMessage;
+	private String statusCode;
+	protected String message;
+	private String tabid;
+	private boolean closeCurrent = true;
 	public boolean isSuccess() {
 		return success;
 	}
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	public String getResultCode() {
-		return resultCode;
+	public String getStatusCode() {
+		return statusCode;
 	}
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
 	}
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getMessage() {
+		return message;
 	}
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setMessage(String message) {
+		this.message = message;
 	}
+	public String getTabid() {
+		return tabid;
+	}
+	public void setTabid(String tabid) {
+		this.tabid = tabid;
+	}
+	public boolean getCloseCurrent() {
+		return closeCurrent;
+	}
+	public void setCloseCurrent(boolean closeCurrent) {
+		this.closeCurrent = closeCurrent;
+	}
+
+
+
 	
 	
 }

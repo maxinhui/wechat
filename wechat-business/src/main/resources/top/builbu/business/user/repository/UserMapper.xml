@@ -2,166 +2,162 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.builbu.business.user.repository.UserMapper">
   <resultMap id="BaseResultMap" type="top.builbu.business.user.entity.User">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:20.
-    -->
-    <id column="user_Id" jdbcType="BIGINT" property="userId" />
-    <result column="create_By_Date" jdbcType="TIMESTAMP" property="createByDate" />
-    <result column="create_By_Id" jdbcType="BIGINT" property="createById" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="Icons" jdbcType="VARCHAR" property="icons" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="on_Line_Status" jdbcType="INTEGER" property="onLineStatus" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="update_by_date" jdbcType="TIMESTAMP" property="updateByDate" />
-    <result column="update_by_id" jdbcType="BIGINT" property="updateById" />
-    <result column="user_type" jdbcType="INTEGER" property="userType" />
+     <id column="user_Id" jdbcType="BIGINT" property="userId" />
+     <result column="create_by_date" jdbcType="TIMESTAMP" property="createByDate" />
+     <result column="create_by_id" jdbcType="BIGINT" property="createById" />
+     <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+     <result column="email" jdbcType="VARCHAR" property="email" />
+     <result column="icons" jdbcType="VARCHAR" property="icons" />
+     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+     <result column="on_line_status" jdbcType="INTEGER" property="onLineStatus" />
+     <result column="password" jdbcType="VARCHAR" property="password" />
+     <result column="phone" jdbcType="VARCHAR" property="phone" />
+     <result column="address" jdbcType="VARCHAR" property="address" />
+     <result column="update_by_date" jdbcType="TIMESTAMP" property="updateByDate" />
+     <result column="update_by_id" jdbcType="BIGINT" property="updateById" />
+     <result column="role_id" jdbcType="VARCHAR" property="roleId" />
   </resultMap>
+  
+  
+  <resultMap id="BaseResultMapDTO" type="top.builbu.business.user.dto.UserDTO">
+     <id column="user_Id" jdbcType="BIGINT" property="userId" />
+     <result column="create_by_date" jdbcType="TIMESTAMP" property="createByDate" />
+     <result column="create_by_id" jdbcType="BIGINT" property="createById" />
+     <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+     <result column="email" jdbcType="VARCHAR" property="email" />
+     <result column="icons" jdbcType="VARCHAR" property="icons" />
+     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+     <result column="on_line_status" jdbcType="INTEGER" property="onLineStatus" />
+     <result column="password" jdbcType="VARCHAR" property="password" />
+     <result column="phone" jdbcType="VARCHAR" property="phone" />
+     <result column="address" jdbcType="VARCHAR" property="address" />
+     <result column="update_by_date" jdbcType="TIMESTAMP" property="updateByDate" />
+     <result column="update_by_id" jdbcType="BIGINT" property="updateById" />
+     <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:20.
-    -->
-    user_Id, create_By_Date, create_By_Id, email, Icons, nickname, on_Line_Status, password, 
-    update_by_date, update_by_id, user_type
+     user_Id,create_by_date,create_by_id,login_name,email,icons,
+     nick_name,on_line_status,password,phone,address,update_by_date,
+     update_by_id,role_id
   </sql>
+<!-- 列表  -->
+  <select id="selectByList"  resultMap="BaseResultMapDTO">
+     select 
+     <include refid="Base_Column_List" />
+     from user where 1=1
+      <if test="dto.userId != null">
+      and  user_Id = #{dto.userId,jdbcType=BIGINT}
+      </if>
+      <if test="dto.createByDate != null">
+      and  create_by_date = #{dto.createByDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="dto.createById != null">
+      and  create_by_id = #{dto.createById,jdbcType=BIGINT}
+      </if>
+      <if test="dto.loginName != null">
+      and  login_name = #{dto.loginName,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.email != null">
+      and  email = #{dto.email,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.icons != null">
+      and  icons = #{dto.icons,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.nickName != null">
+      and  nick_name = #{dto.nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.onLineStatus != null">
+      and  on_line_status = #{dto.onLineStatus,jdbcType=INTEGER}
+      </if>
+      <if test="dto.password != null">
+      and  password = #{dto.password,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.phone != null">
+      and  phone = #{dto.phone,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.address != null">
+      and  address = #{dto.address,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.updateByDate != null">
+      and  update_by_date = #{dto.updateByDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="dto.updateById != null">
+      and  update_by_id = #{dto.updateById,jdbcType=BIGINT}
+      </if>
+      <if test="dto.roleId != null">
+      and  role_id = #{dto.roleId,jdbcType=VARCHAR}
+      </if>
+     order by user_Id desc limit #{offset},#{limit}
+  </select>
+  
+<!-- 主键查询  -->
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:20.
-    -->
     select 
     <include refid="Base_Column_List" />
-    from user
+    from user    
     where user_Id = #{userId,jdbcType=BIGINT}
   </select>
+  
+
+<!-- 主键删除 --> 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:20.
-    -->
     delete from user
     where user_Id = #{userId,jdbcType=BIGINT}
   </delete>
+
+
+<!-- 插入  -->
   <insert id="insert" parameterType="top.builbu.business.user.entity.User">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:20.
-    -->
-    insert into user (user_Id, create_By_Date, create_By_Id, 
-      email, Icons, nickname, 
-      on_Line_Status, password, update_by_date, 
-      update_by_id, user_type)
-    values (#{userId,jdbcType=BIGINT}, #{createByDate,jdbcType=TIMESTAMP}, #{createById,jdbcType=BIGINT}, 
-      #{email,jdbcType=VARCHAR}, #{icons,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{onLineStatus,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{updateByDate,jdbcType=TIMESTAMP}, 
-      #{updateById,jdbcType=BIGINT}, #{userType,jdbcType=INTEGER})
+    insert into user (
+	    user_Id,create_by_date,create_by_id,login_name,email,icons,
+	    nick_name,on_line_status,password,phone,address,update_by_date,
+	    update_by_id,role_id
+      )
+    values (
+         #{userId,jdbcType=BIGINT}, #{createByDate,jdbcType=TIMESTAMP}, #{createById,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{icons,jdbcType=VARCHAR},
+         #{nickName,jdbcType=VARCHAR}, #{onLineStatus,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{updateByDate,jdbcType=TIMESTAMP},
+         #{updateById,jdbcType=BIGINT}, #{roleId,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="top.builbu.business.user.entity.User">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:20.
-    -->
-    insert into user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        user_Id,
-      </if>
-      <if test="createByDate != null">
-        create_By_Date,
-      </if>
-      <if test="createById != null">
-        create_By_Id,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="icons != null">
-        Icons,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="onLineStatus != null">
-        on_Line_Status,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="updateByDate != null">
-        update_by_date,
-      </if>
-      <if test="updateById != null">
-        update_by_id,
-      </if>
-      <if test="userType != null">
-        user_type,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="createByDate != null">
-        #{createByDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createById != null">
-        #{createById,jdbcType=BIGINT},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="icons != null">
-        #{icons,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="onLineStatus != null">
-        #{onLineStatus,jdbcType=INTEGER},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="updateByDate != null">
-        #{updateByDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateById != null">
-        #{updateById,jdbcType=BIGINT},
-      </if>
-      <if test="userType != null">
-        #{userType,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="top.builbu.business.user.entity.User">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:20.
-    -->
+ 
+<!-- 修改 -->  
+  <update id="updateByPrimaryKey" parameterType="top.builbu.business.user.entity.User">
     update user
     <set>
+      <if test="userId != null">
+        user_Id = #{userId,jdbcType=BIGINT},
+      </if>
       <if test="createByDate != null">
-        create_By_Date = #{createByDate,jdbcType=TIMESTAMP},
+        create_by_date = #{createByDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createById != null">
-        create_By_Id = #{createById,jdbcType=BIGINT},
+        create_by_id = #{createById,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="icons != null">
-        Icons = #{icons,jdbcType=VARCHAR},
+        icons = #{icons,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null">
-        nickname = #{nickname,jdbcType=VARCHAR},
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="onLineStatus != null">
-        on_Line_Status = #{onLineStatus,jdbcType=INTEGER},
+        on_line_status = #{onLineStatus,jdbcType=INTEGER},
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="updateByDate != null">
         update_by_date = #{updateByDate,jdbcType=TIMESTAMP},
@@ -169,28 +165,70 @@
       <if test="updateById != null">
         update_by_id = #{updateById,jdbcType=BIGINT},
       </if>
-      <if test="userType != null">
-        user_type = #{userType,jdbcType=INTEGER},
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR}
       </if>
     </set>
+  
     where user_Id = #{userId,jdbcType=BIGINT}
+   
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.builbu.business.user.entity.User">
-    <!--
-      WARNING - @mbggenerated
-      Generated on 2017-01-05 15:38:20.
-    -->
-    update user
-    set create_By_Date = #{createByDate,jdbcType=TIMESTAMP},
-      create_By_Id = #{createById,jdbcType=BIGINT},
-      email = #{email,jdbcType=VARCHAR},
-      Icons = #{icons,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      on_Line_Status = #{onLineStatus,jdbcType=INTEGER},
-      password = #{password,jdbcType=VARCHAR},
-      update_by_date = #{updateByDate,jdbcType=TIMESTAMP},
-      update_by_id = #{updateById,jdbcType=BIGINT},
-      user_type = #{userType,jdbcType=INTEGER}
-    where user_Id = #{userId,jdbcType=BIGINT}
-  </update>
+<!--   批量删除       -->
+  <delete id="deleteByAll" parameterType="java.lang.Long">
+      delete from user where user_Id in
+      <foreach item="id" collection="delids" open="(" separator="," close=")">
+          #{id}
+      </foreach>
+  </delete>  
+  
+  <select id="selectByCount" resultType="java.lang.Integer">
+		select count(1)
+		from user where 1=1
+	      <if test="dto.userId != null">
+	      and  user_Id = #{dto.userId,jdbcType=BIGINT}
+	      </if>
+	      <if test="dto.createByDate != null">
+	      and  create_by_date = #{dto.createByDate,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="dto.createById != null">
+	      and  create_by_id = #{dto.createById,jdbcType=BIGINT}
+	      </if>
+	      <if test="dto.loginName != null">
+	      and  login_name = #{dto.loginName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.email != null">
+	      and  email = #{dto.email,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.icons != null">
+	      and  icons = #{dto.icons,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.nickName != null">
+	      and  nick_name = #{dto.nickName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.onLineStatus != null">
+	      and  on_line_status = #{dto.onLineStatus,jdbcType=INTEGER}
+	      </if>
+	      <if test="dto.password != null">
+	      and  password = #{dto.password,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.phone != null">
+	      and  phone = #{dto.phone,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.address != null">
+	      and  address = #{dto.address,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.updateByDate != null">
+	      and  update_by_date = #{dto.updateByDate,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="dto.updateById != null">
+	      and  update_by_id = #{dto.updateById,jdbcType=BIGINT}
+	      </if>
+	      <if test="dto.roleId != null">
+	      and  role_id = #{dto.roleId,jdbcType=VARCHAR}
+	      </if>
+	</select>
+	
+	<select id="login" parameterType="java.lang.String" resultMap="BaseResultMapDTO">
+	 select * from user where login_name = #{loginName} and password = #{passWord}
+	</select>
 </mapper>

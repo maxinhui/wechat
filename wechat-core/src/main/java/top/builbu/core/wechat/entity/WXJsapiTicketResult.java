@@ -1,10 +1,13 @@
 package top.builbu.core.wechat.entity;
+
+import top.builbu.common.dto.ResultWeChat;
+
 /**
  * 微信公眾號jsTicket返回
  * @author Administrator
  *
  */
-public class WXJsapiTicketResult extends WXResult{
+public class WXJsapiTicketResult extends ResultWeChat{
 
 
 	

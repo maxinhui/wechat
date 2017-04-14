@@ -1,6 +1,10 @@
 package top.builbu.core.wechat.utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -61,5 +65,35 @@ public class WXSignUtils {
 		
 		return sb.toString().substring(0,sb.length()-1);
 
+	}
+	
+	
+	/**
+	 * 微信认证签名
+	 * @param token
+	 * @param timestamp
+	 * @param nonce
+	 * @param signature
+	 */
+	public static boolean checkSignature(String token,String timestamp,String nonce,String signature){
+		boolean result = false;
+		List<String> params = new ArrayList<String>();
+		params.add(token);
+		params.add(timestamp);
+		params.add(nonce);
+
+		 //1. 将token、timestamp、nonce三个参数进行字典序排序  
+        Collections.sort(params, new Comparator<String>() {  
+            public int compare(String o1, String o2) {  
+                return o1.compareTo(o2);  
+            }  
+        });
+                    
+        //2. 将三个参数字符串拼接成一个字符串进行sha1加密  
+        String temp = SHA1.encode(params.get(0) + params.get(1) + params.get(2)); 
+        if(temp.equals(signature)){
+        	result = true;
+        }
+        return result;
 	}
 }

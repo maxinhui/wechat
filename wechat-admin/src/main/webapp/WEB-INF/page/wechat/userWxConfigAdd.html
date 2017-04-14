@@ -1,0 +1,148 @@
+<script type="text/javascript">
+function pic_upload_success(file, data) {
+    var json = $.parseJSON(data)
+    
+    $(this).bjuiajax('ajaxDone', json)
+    if (json.success) {
+        $('#custom_pic').val(json.module).trigger('validate')
+        $('#custom_span_pic').html('<img src="'+ json.module +'" width="100" />')
+    }
+}
+function do_OK(json, $form) {
+    console.log(json)
+    console.log($form)
+}
+
+function mycallback(json) {
+
+	$(this)
+    .bjuiajax('ajaxDone', json)       // 信息提示		                       
+   
+    if(json.closeCurrent){
+       $(this)
+           .navtab('reloadFlag', json.tabid)
+           .dialog('refresh')	
+    }
+
+
+}
+</script>
+<div class="bjui-pageContent">
+<form action="${request.contextPath}/userWxConfig/save" id="j_custom_form" data-toggle="validate" data-alertmsg="false" data-callback="mycallback">
+    <input type="hidden" name="custom.id" value="edce142bc2ed4ec6b623aacaf602a4de">
+    <div class="bjui-row col-3">
+     
+        <br>
+                <label class="row-label" >app</label>
+         <div class="row-input required">
+            <input type="text" name="appId" id="appId" value="" data-rule="required">
+         </div>
+                <label class="row-label" >app</label>
+         <div class="row-input required">
+            <input type="text" name="appSecret" id="appSecret" value="" data-rule="required">
+         </div>
+                <label class="row-label" >接入验证token</label>
+         <div class="row-input required">
+            <input type="text" name="token" id="token" value="" data-rule="required">
+         </div>
+                <label class="row-label" >支付key</label>
+         <div class="row-input required">
+            <input type="text" name="payKey" id="payKey" value="" data-rule="required">
+         </div>
+                <label class="row-label">创建时间</label>
+         <div class="row-input required">
+            <input type="text" name="createTime" id="createTime" value="" data-toggle="datepicker" data-rule="required">
+            <script type="text/javascript">
+            $(function(){
+            	$('#createTime').on('afterchange.bjui.datepicker', function(e, data) {
+            	    var mydate = data.value
+            	   
+            	    $(this).val(CurentTime(mydate));
+            	})	
+            })
+             function CurentTime(time)
+                { 
+                    var now = new Date(time);    
+                    var year = now.getFullYear();       //年
+                    var month = now.getMonth() + 1;     //月
+                    var day = now.getDate();            //日      
+                    var hh = now.getHours();            //时
+                    var mm = now.getMinutes();          //分
+                   
+                    var clock = year + "/";     
+                    if(month < 10)
+                        clock += "0";    
+                    clock += month + "/";      
+                    if(day < 10)
+                        clock += "0";          
+                    clock += day + " ";
+                   
+                    if(hh < 10)
+                        clock += "0";          
+                    clock += hh + ":";
+
+                    if (mm < 10) clock += '0'; 
+                    clock += mm+":00"; 
+                    return clock; 
+                } 
+            </script>
+         </div>
+                <label class="row-label">修改时间</label>
+         <div class="row-input required">
+            <input type="text" name="updateTime" id="updateTime" value="" data-toggle="datepicker" data-rule="required">
+            <script type="text/javascript">
+            $(function(){
+            	$('#updateTime').on('afterchange.bjui.datepicker', function(e, data) {
+            	    var mydate = data.value
+            	   
+            	    $(this).val(CurentTime(mydate));
+            	})	
+            })
+             function CurentTime(time)
+                { 
+                    var now = new Date(time);    
+                    var year = now.getFullYear();       //年
+                    var month = now.getMonth() + 1;     //月
+                    var day = now.getDate();            //日      
+                    var hh = now.getHours();            //时
+                    var mm = now.getMinutes();          //分
+                   
+                    var clock = year + "/";     
+                    if(month < 10)
+                        clock += "0";    
+                    clock += month + "/";      
+                    if(day < 10)
+                        clock += "0";          
+                    clock += day + " ";
+                   
+                    if(hh < 10)
+                        clock += "0";          
+                    clock += hh + ":";
+
+                    if (mm < 10) clock += '0'; 
+                    clock += mm+":00"; 
+                    return clock; 
+                } 
+            </script>
+         </div>
+                <label class="row-label" >创建者id</label>
+         <div class="row-input required">
+            <input type="text" name="createId" id="createId" value="" data-rule="required">
+         </div>
+                <label class="row-label" >修改者id</label>
+         <div class="row-input required">
+            <input type="text" name="updateId" id="updateId" value="" data-rule="required">
+         </div>
+                <label class="row-label" >标识</label>
+         <div class="row-input required">
+            <input type="text" name="pramToken" id="pramToken" value="" data-rule="required">
+         </div>
+    </div>
+</form>
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+        <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+    </ul>
+</div>

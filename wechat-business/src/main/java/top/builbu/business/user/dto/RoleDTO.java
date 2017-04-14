@@ -1,50 +1,60 @@
-package top.builbu.business.user.dto;
+package top.builbu.business.user.dto;  
 
-/**
- * [STRATO MyBatis Generator]
- * Table: role
-@mbggenerated do_not_delete_during_merge 2017-01-05 15:38:19
- */
-public class RoleDTO {
-    /**
-     * Column: role.role_id
-    @mbggenerated 2017-01-05 15:38:19
-     */
-    private Integer roleId;
-
-    /**
-     * Column: role.role_name
-    @mbggenerated 2017-01-05 15:38:19
-     */
-    private String roleName;
-
-    /**
-     * Column: role.role_sys
-    @mbggenerated 2017-01-05 15:38:19
-     */
-    private String roleSys;
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
-    }
-
-    public String getRoleSys() {
-        return roleSys;
-    }
-
-    public void setRoleSys(String roleSys) {
-        this.roleSys = roleSys == null ? null : roleSys.trim();
-    }
-}
+import java.util.Date;      
+  
+public class RoleDTO {  
+	    /**
+	     *
+	     *角色id
+	    **/
+        private Integer roleId;  
+	    /**
+	     *
+	     *角色名
+	    **/
+        private String roleName;  
+	    /**
+	     *
+	     *角色标示
+	    **/
+        private String roleSys;  
+	    /**
+	     *
+	     *权限id
+	    **/
+        private String permissionId;  
+          
+          
+        public Integer getRoleId(){  
+            return this.roleId;  
+        }  
+       
+        public void setRoleId(Integer roleId){  
+            this.roleId = roleId;
+        } 
+         
+        public String getRoleName(){  
+            return this.roleName;  
+        }  
+       
+        public void setRoleName(String roleName){  
+            this.roleName = roleName == "" ? null : roleName.trim();
+        } 
+         
+        public String getRoleSys(){  
+            return this.roleSys;  
+        }  
+       
+        public void setRoleSys(String roleSys){  
+            this.roleSys = roleSys == "" ? null : roleSys.trim();
+        } 
+         
+        public String getPermissionId(){  
+            return this.permissionId;  
+        }  
+       
+        public void setPermissionId(String permissionId){  
+            this.permissionId = permissionId == "" ? null : permissionId.trim();
+        } 
+         
+}  

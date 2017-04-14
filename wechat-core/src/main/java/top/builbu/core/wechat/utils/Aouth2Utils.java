@@ -7,8 +7,8 @@ import org.apache.http.client.ClientProtocolException;
 
 import top.builbu.core.wechat.entity.WXJsapiTicketResult;
 import top.builbu.core.wechat.entity.WXOpenIdResult;
-import top.builbu.core.wechat.entity.WXOpenUserResult;
-import top.builbu.core.wechat.entity.WXTokenResult;
+import top.builbu.core.wechat.entity.WXSubscribeResult;
+import top.builbu.core.wechat.entity.WXAccessTokenResult;
 import top.builbu.core.wechat.entity.WXUrl;
 
 import com.alibaba.fastjson.JSONObject;
@@ -27,10 +27,10 @@ public class Aouth2Utils {
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	public static WXTokenResult getAccessToken(String appid, String appsecret) throws ClientProtocolException, IOException {
+	public static WXAccessTokenResult getAccessToken(String appid, String appsecret) throws ClientProtocolException, IOException {
 		// 获取access_token的接口地址（GET） 限200（次/天）
 		String s=HttpXmlUtils.httpRequest(WXUrl.access_token_url.replace("APPID", appid).replace("APPSECRET", appsecret), "GET",null);
-		WXTokenResult result= (WXTokenResult) JSONObject.parseObject(s, WXTokenResult.class);	
+		WXAccessTokenResult result= (WXAccessTokenResult) JSONObject.parseObject(s, WXAccessTokenResult.class);	
 		return result;
 	}
 	
@@ -76,9 +76,9 @@ public class Aouth2Utils {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public static WXOpenUserResult openAouth(String accessToken,String openId) throws ParseException, IOException{
+	public static WXSubscribeResult openAouth(String accessToken,String openId) throws ParseException, IOException{
 		 String s = HttpXmlUtils.httpRequest(WXUrl.open_aouth_url.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId), "GET", null);  
-		 WXOpenUserResult result = (WXOpenUserResult) JSONObject.parseObject(s, WXOpenUserResult.class);   
+		 WXSubscribeResult result = (WXSubscribeResult) JSONObject.parseObject(s, WXSubscribeResult.class);   
 		 return result;
 	}
 		
@@ -107,7 +107,7 @@ public class Aouth2Utils {
 	}
 		
 		public static void main(String[] args) {
-			WXTokenResult a = null;
+			WXAccessTokenResult a = null;
 			WXJsapiTicketResult b = null;
 			try {
 				a = getAccessToken("wx35eed173d89a147d","c740349f70f66175f9594fbb3a48e129");

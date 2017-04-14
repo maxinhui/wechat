@@ -1,0 +1,148 @@
+<script type="text/javascript">
+function pic_upload_success(file, data) {
+    var json = $.parseJSON(data)
+    
+    $(this).bjuiajax('ajaxDone', json)
+    if (json.success) {
+        $('#custom_pic').val(json.module).trigger('validate')
+        $('#custom_span_pic').html('<img src="'+ json.module +'" width="100" />')
+    }
+}
+function do_OK(json, $form) {
+    console.log(json)
+    console.log($form)
+}
+
+function mycallback(json) {
+
+	$(this)
+    .bjuiajax('ajaxDone', json)       // 信息提示		                       
+   
+    if(json.closeCurrent){
+       $(this)
+           .navtab('reloadFlag', json.tabid)
+           .dialog('closeCurrent')	
+    }
+
+}
+</script>
+<div class="bjui-pageContent">
+<form action="${request.contextPath}/user_wx_config/update" id="j_custom_form" data-toggle="validate" data-alertmsg="false" data-callback="mycallback">
+    <input type="hidden" name="custom.id" value="edce142bc2ed4ec6b623aacaf602a4de">
+    <input type="hidden" name="id" value="${module.id}">
+    <div class="bjui-row col-3">
+     
+        <br>
+                <label class="row-label" >app</label>
+         <div class="row-input required">
+            <input type="text" name="app_id" id="app_id" value="${module.app_id?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >app</label>
+         <div class="row-input required">
+            <input type="text" name="app_secret" id="app_secret" value="${module.app_secret?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >接入验证token</label>
+         <div class="row-input required">
+            <input type="text" name="token" id="token" value="${module.token?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >支付key</label>
+         <div class="row-input required">
+            <input type="text" name="pay_key" id="pay_key" value="${module.pay_key?default('')}" data-rule="required">
+         </div>
+                <label class="row-label">创建时间</label>
+         <div class="row-input required">
+            <input type="text" name="create_time" id="create_time" value="" data-toggle="datepicker" data-rule="required">
+            <script type="text/javascript">
+            $(function(){
+            	$('#create_time').on('afterchange.bjui.datepicker', function(e, data) {
+            	    var mydate = data.value
+            	   
+            	    $(this).val(CurentTime(mydate));
+            	})	
+            })
+             function CurentTime(time)
+                { 
+                    var now = new Date(time);    
+                    var year = now.getFullYear();       //年
+                    var month = now.getMonth() + 1;     //月
+                    var day = now.getDate();            //日      
+                    var hh = now.getHours();            //时
+                    var mm = now.getMinutes();          //分
+                   
+                    var clock = year + "/";     
+                    if(month < 10)
+                        clock += "0";    
+                    clock += month + "/";      
+                    if(day < 10)
+                        clock += "0";          
+                    clock += day + " ";
+                   
+                    if(hh < 10)
+                        clock += "0";          
+                    clock += hh + ":";
+
+                    if (mm < 10) clock += '0'; 
+                    clock += mm+":00"; 
+                    return clock; 
+                } 
+            </script>
+         </div>
+                <label class="row-label">修改时间</label>
+         <div class="row-input required">
+            <input type="text" name="update_time" id="update_time" value="" data-toggle="datepicker" data-rule="required">
+            <script type="text/javascript">
+            $(function(){
+            	$('#update_time').on('afterchange.bjui.datepicker', function(e, data) {
+            	    var mydate = data.value
+            	   
+            	    $(this).val(CurentTime(mydate));
+            	})	
+            })
+             function CurentTime(time)
+                { 
+                    var now = new Date(time);    
+                    var year = now.getFullYear();       //年
+                    var month = now.getMonth() + 1;     //月
+                    var day = now.getDate();            //日      
+                    var hh = now.getHours();            //时
+                    var mm = now.getMinutes();          //分
+                   
+                    var clock = year + "/";     
+                    if(month < 10)
+                        clock += "0";    
+                    clock += month + "/";      
+                    if(day < 10)
+                        clock += "0";          
+                    clock += day + " ";
+                   
+                    if(hh < 10)
+                        clock += "0";          
+                    clock += hh + ":";
+
+                    if (mm < 10) clock += '0'; 
+                    clock += mm+":00"; 
+                    return clock; 
+                } 
+            </script>
+         </div>
+                <label class="row-label" >创建者id</label>
+         <div class="row-input required">
+            <input type="text" name="create_id" id="create_id" value="${module.create_id}" data-rule="required">
+         </div>
+                <label class="row-label" >修改者id</label>
+         <div class="row-input required">
+            <input type="text" name="update_id" id="update_id" value="${module.update_id}" data-rule="required">
+         </div>
+                <label class="row-label" >标识</label>
+         <div class="row-input required">
+            <input type="text" name="pram_token" id="pram_token" value="${module.pram_token?default('')}" data-rule="required">
+         </div>
+    </div>
+</form>
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+        <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+    </ul>
+</div>

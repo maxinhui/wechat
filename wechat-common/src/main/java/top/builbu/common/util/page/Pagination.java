@@ -11,25 +11,18 @@ import java.io.Serializable;
 public class Pagination implements Serializable {
 	private static final long serialVersionUID = 1052319221780926400L;
 
-	public static final int DEFAULT_PAGE_SIZE = 10;
+	public static final int DEFAULT_PAGE_SIZE = 30;
 	public static final int DEFAULT_CURRENT_SKIP = 1;
 
-	private int rows = DEFAULT_PAGE_SIZE; // 每页显示记录数
-	private int total; // 总条目数
-	private int totalPage; // 总页数
-	private int page = DEFAULT_CURRENT_SKIP; // 当前页
+	private int pageSize = DEFAULT_PAGE_SIZE; // 每页显示记录数
+
+	private int pageCurrent = DEFAULT_CURRENT_SKIP; // 当前页
 
 	private int currentResult; // 当前记录起始索引
 
-	private String orderBy;
+	private String orderField; //排序字段
 
-	public String getOrderBy() {
-		return orderBy;
-	}
-
-	public void setOrderBy(String orderBy) {
-		this.orderBy = orderBy;
-	}
+	private String orderDirection; //排序方式
 
 	public Pagination() {
 
@@ -39,32 +32,23 @@ public class Pagination implements Serializable {
 		this(rows, DEFAULT_CURRENT_SKIP);
 	}
 
-	public Pagination(int rows, int page) {
-		this.rows = rows;
-		this.page = page;
+	public Pagination(int pageSize, int pageCurrent) {
+		this.pageSize = pageSize;
+		this.pageCurrent = pageCurrent;
 	}
 
-	public int getRows() {
-		return rows;
+	public int getPageSize() {
+		return pageSize;
 	}
 
-	public void setRows(int rows) {
-		this.rows = rows;
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 
-	public int getTotal() {
-		return total;
-	}
 
-	public void setTotal(int total) {
-		this.total = total;
-		totalPage = total % rows == 0 ? total / rows : (total / rows + 1);
-
-		this.currentResult = (this.getPage() - 1) * this.getRows();
-	}
 
 	public int getCurrentResult() {
-		this.currentResult = (this.getPage() - 1) * this.getRows();
+		this.currentResult = (this.getPageCurrent() - 1) * this.getPageSize();
 		return currentResult;
 	}
 
@@ -72,30 +56,40 @@ public class Pagination implements Serializable {
 		this.currentResult = currentResult;
 	}
 
-	public int getPage() {
-		if (page <= 1) {
+	public int getPageCurrent() {
+		if (pageCurrent <= 1) {
 			return 1;
 		}
-		return page;
+		return pageCurrent;
 	}
 
-	public void setPage(int page) {
-		this.page = page;
-		this.currentResult = (this.getPage() - 1) * this.getRows();
+	public void setPageCurrent(int pageCurrent) {
+		this.pageCurrent = pageCurrent;
+		this.currentResult = (this.getPageCurrent() - 1) * this.getPageSize();
 	}
 
-	public int getTotalPage() {
-		return totalPage;
-	}
 
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
 
 	@Override
 	public String toString() {
-		return "Pagination [rows=" + this.rows + ", total=" + this.total + ", totalPage=" + this.totalPage + ", page="
-				+ this.page + ", currentResult=" + this.currentResult + ", orderBy=" + this.orderBy + "]";
+		return "Pagination [rows=" + this.pageSize + ", page="
+				+ this.pageCurrent + ", currentResult=" + this.currentResult + ", orderBy=" + this.orderField + "]";
+	}
+
+	public String getOrderField() {
+		return orderField;
+	}
+
+	public void setOrderField(String orderField) {
+		this.orderField = orderField;
+	}
+
+	public String getOrderDirection() {
+		return orderDirection;
+	}
+
+	public void setOrderDirection(String orderDirection) {
+		this.orderDirection = orderDirection;
 	}
 
 }

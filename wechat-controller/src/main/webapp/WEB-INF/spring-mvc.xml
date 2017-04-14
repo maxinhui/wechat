@@ -73,10 +73,13 @@
 		</property>
 	</bean>
       
-    <bean id="maxUploadSize" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-        <property name="maxUploadSize" value="32505856" /><!-- 上传文件大小限制为31M，31*1024*1024 -->  
-        <property name="maxInMemorySize" value="4096" />  
-    </bean>  
+  	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 上传文件大小限制为10000M，10000*1024*1024,根据实际情况做调整 -->
+		<property name="maxUploadSize" value="10485760000"></property>
+		<property name="maxInMemorySize" value="40960"></property>
+	</bean>
       
 <!--     <mvc:interceptors> -->
 <!-- 		<mvc:interceptor> -->

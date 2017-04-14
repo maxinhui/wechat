@@ -27,5 +27,6 @@
   	<module>wechat-core</module>
   	<module>wechat-common</module>
   	<module>wechat-controller</module>
+  	<module>wechat-admin</module>
   </modules>
 </project>

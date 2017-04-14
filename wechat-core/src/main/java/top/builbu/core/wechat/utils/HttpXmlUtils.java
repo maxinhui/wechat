@@ -14,12 +14,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 import javax.net.ssl.HttpsURLConnection;
-
+import javax.servlet.http.HttpServletRequest;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import top.builbu.core.wechat.entity.Unifiedorder;
 
 
@@ -420,40 +422,49 @@ public class HttpXmlUtils {
 		}
 		return result;
 	}
-	public static Map<String,Object> getResult(String jsapiTicket,String url) throws Exception {
-		
-	    Map<String,Object> map = null;
-		SortedMap<Object,Object> parameters = new TreeMap<Object,Object>();
-		String noncestr="843c124b-c5d4-4919-a163-fb9372d05889";//RandCharsUtils.getRandomString(16);//生成16位随机字符串
-		String timestamp="1478145014";//(System.currentTimeMillis() / 1000) + "";//获取当前时间戳
-	  
-		//组装签名数据
-		parameters.put("jsapi_ticket",jsapiTicket );//获取当前公众号的jsapiTicket
-		parameters.put("noncestr", noncestr);
-		parameters.put("timestamp", timestamp);
-		parameters.put("url", url);		
-		String sign=SHA1.encode(WXSignUtils.createSign(parameters));//签名生成   
-		
-		//组装返回数据
-		map=new HashMap<String, Object>();
-		map.put("noncestr", noncestr);
-		map.put("timestamp", timestamp);
-		map.put("sign", sign);
-		map.put("appId", "");
-		return map;
-	 
 	
-	
-}
-public static void main(String[] args) {
-	try {
-		String s=httpRequest("http://weixinfoods1.suntory.com.cn/?openid=[openid]","GET", null);
-		System.out.print(s);
-//		Map<String,Object> b=getResult("kgt8ON7yVITDhtdwci0qeVQ6W_woEXDbTxsyJKTkRUzx89SOdl-hGnBhAgjxCx0QNZbvBG0SdGOLlRvo3A6p8w","http://www.qkvkcn.com/JQ/index/index!index.htm?null");
-	//System.out.print(JsonUtil.toJson(b));
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+	/**
+	 * 接收回调数据
+	 * @param request
+	 * @return
+	 */
+	public static Map<String,Object> requestResult(HttpServletRequest request){
+		    Map<String, Object> map = null;
+		    InputStream inputStream = null;
+			try {
+				map = new HashMap<String, Object>();
+				inputStream = request.getInputStream();
+				 // 读取输入流
+			    SAXReader reader = new SAXReader();
+			    Document document = reader.read(inputStream);
+			    // 得到xml根元素
+			    Element root = document.getRootElement();
+			    // 得到根元素的所有子节点
+			    List<Element> elementList = root.elements();
+			 
+			    // 遍历所有子节点
+			    for (Element e : elementList){
+			    	System.out.println("key:"+e.getName()+"-----value:"+e.getText());
+			        map.put(e.getName(), e.getText());
+			    }
+			 
+			} catch (IOException | DocumentException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}finally{
+				 // 释放资源
+			    try {
+			    	
+					inputStream.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return map;
 	}
-}
+	
+
+
+
 }

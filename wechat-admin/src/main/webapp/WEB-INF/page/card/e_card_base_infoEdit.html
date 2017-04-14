@@ -1,0 +1,160 @@
+<script type="text/javascript">
+function pic_upload_success(file, data) {
+    var json = $.parseJSON(data)
+    
+    $(this).bjuiajax('ajaxDone', json)
+    if (json.success) {
+        $('#custom_pic').val(json.module).trigger('validate')
+        $('#custom_span_pic').html('<img src="'+ json.module +'" width="100" />')
+    }
+}
+function do_OK(json, $form) {
+    console.log(json)
+    console.log($form)
+}
+
+function mycallback(json) {
+
+	$(this)
+    .bjuiajax('ajaxDone', json)       // 信息提示		                       
+   
+    if(json.closeCurrent){
+       $(this)
+           .navtab('reloadFlag', json.tabid)
+           .dialog('closeCurrent')	
+    }
+
+}
+</script>
+<div class="bjui-pageContent">
+<form action="${request.contextPath}/e_card_base_info/update" id="j_custom_form" data-toggle="validate" data-alertmsg="false" data-callback="mycallback">
+    <input type="hidden" name="custom.id" value="edce142bc2ed4ec6b623aacaf602a4de">
+    <input type="hidden" name="info_no" value="${module.info_no}">
+    <div class="bjui-row col-3">
+     
+        <br>
+                <label class="row-label" >logo</label>
+         <div class="row-input required">
+            <input type="text" name="logo_url" id="logo_url" value="${module.logo_url?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >码型</label>
+         <div class="row-input required">
+            <input type="text" name="code_type" id="code_type" value="${module.code_type?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >商户名字</label>
+         <div class="row-input required">
+            <input type="text" name="brand_name" id="brand_name" value="${module.brand_name?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >卡券名</label>
+         <div class="row-input required">
+            <input type="text" name="title" id="title" value="${module.title?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >券颜色</label>
+         <div class="row-input required">
+            <input type="text" name="color" id="color" value="${module.color?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >卡券使用提醒</label>
+         <div class="row-input required">
+            <input type="text" name="notice" id="notice" value="${module.notice?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >卡券使用说明</label>
+         <div class="row-input required">
+            <input type="text" name="description" id="description" value="${module.description?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >商品信息</label>
+         <div class="row-input required">
+            <input type="text" name="sku" id="sku" value="${module.sku?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >使用日期</label>
+         <div class="row-input required">
+            <input type="text" name="date_info" id="date_info" value="${module.date_info?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >是否自定义Code码</label>
+         <div class="row-input required">
+            <input type="text" name="use_custom_code" id="use_custom_code" value="${module.use_custom_code}" data-rule="required">
+         </div>
+                <label class="row-label" >导入式code</label>
+         <div class="row-input required">
+            <input type="text" name="get_custom_code_mode" id="get_custom_code_mode" value="${module.get_custom_code_mode?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >客服电话</label>
+         <div class="row-input required">
+            <input type="text" name="service_phone" id="service_phone" value="${module.service_phone?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >获取门店位置poiid。具备线下门店</label>
+         <div class="row-input required">
+            <input type="text" name="location_id_list" id="location_id_list" value="${module.location_id_list?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >设置本卡券支持全部门店，与location</label>
+         <div class="row-input required">
+            <input type="text" name="use_all_locations" id="use_all_locations" value="${module.use_all_locations}" data-rule="required">
+         </div>
+                <label class="row-label" >第三方来源名，例如同程旅游、大众点评。</label>
+         <div class="row-input required">
+            <input type="text" name="source" id="source" value="${module.source?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >自定义跳转外链的入口名字</label>
+         <div class="row-input required">
+            <input type="text" name="custom_url_name" id="custom_url_name" value="${module.custom_url_name?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >卡券顶部居中的按钮，仅在卡券状</label>
+         <div class="row-input required">
+            <input type="text" name="center_title" id="center_title" value="${module.center_title?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >显示在入口下方的提示语</label>
+         <div class="row-input required">
+            <input type="text" name="center_sub_title" id="center_sub_title" value="${module.center_sub_title?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >顶部居中的url</label>
+         <div class="row-input required">
+            <input type="text" name="center_url" id="center_url" value="${module.center_url?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >自定义跳转的URL</label>
+         <div class="row-input required">
+            <input type="text" name="custom_url" id="custom_url" value="${module.custom_url?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >显示在入口右侧的提示语。</label>
+         <div class="row-input required">
+            <input type="text" name="custom_url_sub_title" id="custom_url_sub_title" value="${module.custom_url_sub_title?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >营销场景的自定义入口名称。</label>
+         <div class="row-input required">
+            <input type="text" name="promotion_url_name" id="promotion_url_name" value="${module.promotion_url_name?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >入口跳转外链的地址链接。</label>
+         <div class="row-input required">
+            <input type="text" name="promotion_url" id="promotion_url" value="${module.promotion_url?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >显示在营销入口右侧的提示语</label>
+         <div class="row-input required">
+            <input type="text" name="promotion_url_sub_title" id="promotion_url_sub_title" value="${module.promotion_url_sub_title?default('')}" data-rule="required">
+         </div>
+                <label class="row-label" >每人可领券的数量限制,不填写默认为50。</label>
+         <div class="row-input required">
+            <input type="text" name="get_limit" id="get_limit" value="${module.get_limit}" data-rule="required">
+         </div>
+                <label class="row-label" >每人可核销的数量限制,不填写默认为50。</label>
+         <div class="row-input required">
+            <input type="text" name="use_limit" id="use_limit" value="${module.use_limit}" data-rule="required">
+         </div>
+                <label class="row-label" >卡券领取页面是否可分享</label>
+         <div class="row-input required">
+            <input type="text" name="can_share" id="can_share" value="${module.can_share}" data-rule="required">
+         </div>
+                <label class="row-label" >卡券是否可转赠</label>
+         <div class="row-input required">
+            <input type="text" name="can_give_friend" id="can_give_friend" value="${module.can_give_friend}" data-rule="required">
+         </div>
+                <label class="row-label" ></label>
+         <div class="row-input required">
+            <input type="text" name="card_no" id="card_no" value="${module.card_no}" data-rule="required">
+         </div>
+    </div>
+</form>
+</div>
+<div class="bjui-pageFooter">
+    <ul>
+        <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+        <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+    </ul>
+</div>

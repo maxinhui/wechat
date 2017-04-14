@@ -1,7 +1,8 @@
 package top.builbu.core.wechat.utils;
 
-import top.builbu.core.wechat.entity.WXResult;
-import top.builbu.core.wechat.entity.WXTokenResult;
+
+import top.builbu.common.dto.ResultWeChat;
+import top.builbu.core.wechat.entity.WXAccessTokenResult;
 import top.builbu.core.wechat.entity.WXUserResult;
 
 import com.alibaba.fastjson.JSONObject;
@@ -22,13 +23,13 @@ public class AouthUtils {
 	 * @param secrect
 	 * @return
 	 */
-	public static WXTokenResult getToken(String corpid,String secrect){
+	public static WXAccessTokenResult getToken(String corpid,String secrect){
 		String url="https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=ID&corpsecret=SECRECT";
 	System.out.print(url.replace("ID", corpid).replace("SECRECT", secrect));
 		String s=HttpXmlUtils.httpRequest(url.replace("ID",corpid).replace("SECRECT",secrect), "GET",null);
 		System.out.print(s);
 		
-		WXTokenResult result=  JSONObject.parseObject(s, WXTokenResult.class);	
+		WXAccessTokenResult result=  JSONObject.parseObject(s, WXAccessTokenResult.class);	
 		System.out.println(result.getAccess_token()+"");
 		return result;
 	}
@@ -55,11 +56,11 @@ public class AouthUtils {
 	 * @param userId
 	 * @return
 	 */
-	public static WXResult authsucc(String accessToken,String userId){
+	public static ResultWeChat authsucc(String accessToken,String userId){
 		String url="https://qyapi.weixin.qq.com/cgi-bin/user/authsucc?access_token=ACCESS_TOKEN&userid=USERID";
 		String s=HttpXmlUtils.httpRequest(url.replace("ACCESS_TOKEN",accessToken).replace("USERID",userId), "GET",null);
 		System.out.print(s);
-		WXResult result=(WXResult) JSONObject.parseObject(s,WXResult.class);
+		ResultWeChat result=(ResultWeChat) JSONObject.parseObject(s,ResultWeChat.class);
 		return result;
 	}
 	

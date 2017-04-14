@@ -23,7 +23,7 @@ public class UploadUtil {
 	 * @return 压缩图的地址 多个以,隔开
 	 * @throws Exception
 	 */
-	public static String uploadImg(MultipartFile file, String contextPath, String filePath) {
+	public static String upload(MultipartFile file, String contextPath, String filePath) {
 		File imgFile = new File(contextPath+filePath);
 		if (!imgFile.exists()) {
 			try {
@@ -46,8 +46,6 @@ public class UploadUtil {
 		return filePath;
 	}
 	
-	public static String getPath(){
-		return null;
-	}
+
 }
 

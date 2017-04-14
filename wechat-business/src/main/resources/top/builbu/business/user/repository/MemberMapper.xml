@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.builbu.business.user.repository.MemberMapper">
+  <resultMap id="BaseResultMap" type="top.builbu.business.user.entity.Member">
+     <id column="member_id" jdbcType="BIGINT" property="memberId" />
+     <result column="open_id" jdbcType="VARCHAR" property="openId" />
+     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+     <result column="icons" jdbcType="VARCHAR" property="icons" />
+     <result column="phone" jdbcType="VARCHAR" property="phone" />
+     <result column="address" jdbcType="VARCHAR" property="address" />
+     <result column="create_by_date" jdbcType="TIMESTAMP" property="createByDate" />
+     <result column="on_line_status" jdbcType="INTEGER" property="onLineStatus" />
+     <result column="update_by_date" jdbcType="TIMESTAMP" property="updateByDate" />
+     <result column="is_con" jdbcType="INTEGER" property="isCon" />
+     <result column="parm_token" jdbcType="VARCHAR" property="parmToken" />
+  </resultMap>
+  
+  
+  <resultMap id="BaseResultMapDTO" type="top.builbu.business.user.dto.MemberDTO">
+     <id column="member_id" jdbcType="BIGINT" property="memberId" />
+     <result column="open_id" jdbcType="VARCHAR" property="openId" />
+     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+     <result column="icons" jdbcType="VARCHAR" property="icons" />
+     <result column="phone" jdbcType="VARCHAR" property="phone" />
+     <result column="address" jdbcType="VARCHAR" property="address" />
+     <result column="create_by_date" jdbcType="TIMESTAMP" property="createByDate" />
+     <result column="on_line_status" jdbcType="INTEGER" property="onLineStatus" />
+     <result column="update_by_date" jdbcType="TIMESTAMP" property="updateByDate" />
+     <result column="is_con" jdbcType="INTEGER" property="isCon" />
+     <result column="parm_token" jdbcType="VARCHAR" property="parmToken" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+     member_id,open_id,nick_name,icons,phone,address,
+     create_by_date,on_line_status,update_by_date,is_con,parm_token
+  </sql>
+<!-- 列表  -->
+  <select id="selectByList"  resultMap="BaseResultMapDTO">
+     select 
+     <include refid="Base_Column_List" />
+     from member where 1=1
+      <if test="dto.memberId != null">
+      and  member_id = #{dto.memberId,jdbcType=BIGINT}
+      </if>
+      <if test="dto.openId != null">
+      and  open_id = #{dto.openId,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.nickName != null">
+      and  nick_name = #{dto.nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.icons != null">
+      and  icons = #{dto.icons,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.phone != null">
+      and  phone = #{dto.phone,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.address != null">
+      and  address = #{dto.address,jdbcType=VARCHAR}
+      </if>
+      <if test="dto.createByDate != null">
+      and  create_by_date = #{dto.createByDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="dto.onLineStatus != null">
+      and  on_line_status = #{dto.onLineStatus,jdbcType=INTEGER}
+      </if>
+      <if test="dto.updateByDate != null">
+      and  update_by_date = #{dto.updateByDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="dto.isCon != null">
+      and  is_con = #{dto.isCon,jdbcType=INTEGER}
+      </if>
+      <if test="dto.parmToken != null">
+      and  parm_token = #{dto.parmToken,jdbcType=VARCHAR}
+      </if>
+     order by member_id desc limit #{offset},#{limit}
+  </select>
+  
+<!-- 主键查询  -->
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member    
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </select>
+  
+
+<!-- 主键删除 --> 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </delete>
+
+
+<!-- 插入  -->
+  <insert id="insert" parameterType="top.builbu.business.user.entity.Member">
+    insert into member (
+	    member_id,open_id,nick_name,icons,phone,address,
+	    create_by_date,on_line_status,update_by_date,is_con,parm_token
+      )
+    values (
+         #{memberId,jdbcType=BIGINT}, #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{icons,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+         #{createByDate,jdbcType=TIMESTAMP}, #{onLineStatus,jdbcType=INTEGER}, #{updateByDate,jdbcType=TIMESTAMP}, #{isCon,jdbcType=INTEGER}, #{parmToken,jdbcType=VARCHAR}
+      )
+  </insert>
+ 
+<!-- 修改 -->  
+  <update id="updateByPrimaryKey" parameterType="top.builbu.business.user.entity.Member">
+    update member
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="icons != null">
+        icons = #{icons,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="createByDate != null">
+        create_by_date = #{createByDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="onLineStatus != null">
+        on_line_status = #{onLineStatus,jdbcType=INTEGER},
+      </if>
+      <if test="updateByDate != null">
+        update_by_date = #{updateByDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isCon != null">
+        is_con = #{isCon,jdbcType=INTEGER},
+      </if>
+      <if test="parmToken != null">
+        parm_token = #{parmToken,jdbcType=VARCHAR}
+      </if>
+    </set>
+  
+    where member_id = #{memberId,jdbcType=BIGINT}
+   
+  </update>
+<!--   批量删除       -->
+  <delete id="deleteByAll" parameterType="java.lang.Long">
+      delete from member where member_id in
+      <foreach item="id" collection="delids" open="(" separator="," close=")">
+          #{id}
+      </foreach>
+  </delete>  
+  
+  <select id="selectByCount" resultType="java.lang.Integer">
+		select count(1)
+		from member where 1=1
+	      <if test="dto.memberId != null">
+	      and  member_id = #{dto.memberId,jdbcType=BIGINT}
+	      </if>
+	      <if test="dto.openId != null">
+	      and  open_id = #{dto.openId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.nickName != null">
+	      and  nick_name = #{dto.nickName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.icons != null">
+	      and  icons = #{dto.icons,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.phone != null">
+	      and  phone = #{dto.phone,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.address != null">
+	      and  address = #{dto.address,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dto.createByDate != null">
+	      and  create_by_date = #{dto.createByDate,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="dto.onLineStatus != null">
+	      and  on_line_status = #{dto.onLineStatus,jdbcType=INTEGER}
+	      </if>
+	      <if test="dto.updateByDate != null">
+	      and  update_by_date = #{dto.updateByDate,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="dto.isCon != null">
+	      and  is_con = #{dto.isCon,jdbcType=INTEGER}
+	      </if>
+	      <if test="dto.parmToken != null">
+	      and  parm_token = #{dto.parmToken,jdbcType=VARCHAR}
+	      </if>
+	</select>
+</mapper>

@@ -1,10 +1,13 @@
 package top.builbu.core.wechat.entity;
+
+import top.builbu.common.dto.ResultWeChat;
+
 /**
  * code获取openid
  * @author Administrator
  *
  */
-public class WXOpenIdResult extends WXResult{
+public class WXOpenIdResult extends ResultWeChat{
 
 	private String access_token;//网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
 	

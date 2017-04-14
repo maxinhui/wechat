@@ -11,18 +11,18 @@ public class ResultDO<T> extends BaseResultDO {
 
 	private static final long serialVersionUID = -3434272908589805662L;
 
-	private T data;
-
+	private T module;
+	
 	public ResultDO() {}
 
 	public ResultDO(String key, boolean result) {
-		setResultCode(key);
-		setErrorMessage(BaseResultCode.getValueWithKey(key));
+		setStatusCode(key);
+		setMessage(BaseResultCode.getValueWithKey(key));
 		setSuccess(result);
 	}
 
-	public ResultDO(T data) {
-		this.data = data;
+	public ResultDO(T module) {
+		this.module = module;
 	}
 
 	public static <T> ResultDO<T> getResult() {
@@ -30,10 +30,12 @@ public class ResultDO<T> extends BaseResultDO {
 	}
 
 	public T getModule() {
-		return data;
+		return module;
 	}
 
-	public void setModule(T data) {
-		this.data = data;
+	public void setModule(T module) {
+		this.module = module;
 	}
+
+
 }
